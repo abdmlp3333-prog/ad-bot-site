@@ -2,31 +2,42 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إعلان مدعوم</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Tahoma", sans-serif;
       text-align: center;
-      direction: rtl;
-      margin: 40px;
+      padding: 50px;
+      background-color: #f4f4f4;
+      color: #333;
     }
-    #ad-container {
+    #ad-box {
+      border: 2px dashed #888;
+      padding: 30px;
       margin: 20px auto;
-      width: 100%;
+      background: #fff;
+      width: 80%;
       max-width: 400px;
-      height: 250px;
-      border: 2px dashed #999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #666;
-      background: #f9f9f9;
+      border-radius: 10px;
     }
     #timer {
+      font-size: 20px;
+      margin: 15px 0;
+      color: #444;
+    }
+    #get-code {
+      display: none;
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 25px;
       font-size: 18px;
-      font-weight: bold;
-      margin-top: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #get-code:hover {
+      background: #218838;
     }
   </style>
 </head>
@@ -34,30 +45,44 @@
   <h2>🎬 إعلان مدعوم</h2>
   <p>شاهد الإعلان حتى ينتهي الوقت لتحصل على كودك</p>
 
-  <!-- 🟢 مكان وضع الإعلان -->
-  <div id="ad-container">
-    🔲 هنا يظهر الإعلان
-    <!-- مثال Adsgram:
-    <iframe src="https://adsgram.ai/show?block_id=YOUR_BLOCK_ID"
-            style="width:100%; height:100%; border:none;"></iframe>
-    -->
+  <div id="ad-box">
+    <!-- كود Adsgram -->
+    <script async src="https://adsgram.ai/js/adsgram.js"></script>
+    <script>
+      (function() {
+        window.Adsgram = window.Adsgram || [];
+        Adsgram.push({
+          unitId: "bot-13896",   // 🔑 هذا هو UnitID مالك
+          type: "banner",        // نوع الإعلان (banner / interstitial)
+          container: document.getElementById("ad-box") // عرض الإعلان داخل هذا الصندوق
+        });
+      })();
+    </script>
   </div>
 
-  <!-- ⏳ العداد -->
-  <p id="timer">30 ثانية متبقية...</p>
+  <p id="timer">ثانية متبقية: 15</p>
+
+  <button id="get-code" onclick="showCode()">الحصول على الكود</button>
 
   <script>
-    let time = 30;
-    let timer = setInterval(() => {
-      time--;
-      document.getElementById("timer").innerText = time + " ثانية متبقية...";
-      if (time <= 0) {
-        clearInterval(timer);
-        document.getElementById("timer").innerText = "✅ انتهى الإعلان، سيتم إرسال الكود الآن...";
-        // ترسل رسالة للبوت عبر WebApp
-        Telegram.WebApp.sendData("done");
+    let timeLeft = 25;
+    const timerElement = document.getElementById("timer");
+    const button = document.getElementById("get-code");
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerElement.textContent = "ثانية متبقية: " + timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        timerElement.textContent = "انتهى الوقت ✅";
+        button.style.display = "inline-block";
       }
     }, 1000);
+
+    function showCode() {
+      alert("🔑 كودك هو: 12345"); // هذا الكود مؤقت، تقدر تخليه يجي من البوت
+    }
   </script>
 </body>
 </html>
