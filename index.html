@@ -8,21 +8,21 @@
     body {
       font-family: "Tahoma", sans-serif;
       text-align: center;
-      padding: 50px;
+      padding: 30px;
       background-color: #f4f4f4;
       color: #333;
     }
     #ad-box {
       border: 2px dashed #888;
-      padding: 30px;
+      padding: 20px;
       margin: 20px auto;
       background: #fff;
-      width: 80%;
+      width: 90%;
       max-width: 400px;
       border-radius: 10px;
     }
     #timer {
-      font-size: 20px;
+      font-size: 18px;
       margin: 15px 0;
       color: #444;
     }
@@ -47,22 +47,13 @@
 
   <div id="ad-box">
     <!-- كود Adsgram -->
-    <script async src="https://adsgram.ai/js/adsgram.js"></script>
-    <script>
-      (function() {
-        window.Adsgram = window.Adsgram || [];
-        Adsgram.push({
-          unitId: "bot-13896",   // 🔑 هذا هو UnitID مالك
-          type: "banner",        // نوع الإعلان (banner / interstitial)
-          container: document.getElementById("ad-box") // عرض الإعلان داخل هذا الصندوق
-        });
-      })();
-    </script>
+    <script async src="https://adsgram.ai/js/ads.js"></script>
+    <div id="adsgram-block" data-block-id="bot-13902"></div>
   </div>
 
-  <p id="timer">ثانية متبقية: 15</p>
+  <p id="timer">ثانية متبقية: 25</p>
 
-  <button id="get-code" onclick="showCode()">الحصول على الكود</button>
+  <button id="get-code" onclick="sendDone()">الحصول على الكود</button>
 
   <script>
     let timeLeft = 25;
@@ -80,8 +71,9 @@
       }
     }, 1000);
 
-    function showCode() {
-      alert("🔑 كودك هو: 12345"); // هذا الكود مؤقت، تقدر تخليه يجي من البوت
+    function sendDone() {
+      // إرسال رسالة للبوت بعد انتهاء الإعلان
+      Telegram.WebApp.sendData("done");
     }
   </script>
 </body>
